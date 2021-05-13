@@ -15,12 +15,22 @@ def get_index_page():
 def name_file(name):
     return f"{article_directory}/{name}.md"
 
+def create_new_article_file(name):
+    directories = name.split("/")
+    path_so_far = "" 
+    for directory in directories[:-1]:
+        path_so_far += directory + "/"
+        if not os.path.isdir(path_so_far):
+            os.mkdir(path_so_far)
+
+    if not os.path.isfile(name):
+        open(name, "a")
+
 @app.get("/articles/{name:path}/edit", name="path-convertor")
 def get_article(request: Request, name: str):
     file_name = name_file(name)
 
-    if not os.path.isfile(file_name):
-        open(file_name, "a")
+    create_new_article_file(file_name)
 
     with open(file_name) as f:
         content = f.read()
