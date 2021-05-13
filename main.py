@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
+import markdown
 
 app = FastAPI()
 article_directory = "./articles"
@@ -13,4 +14,5 @@ def get_index_page():
 @app.get("/{name:path}", name="path-convertor")
 def get_article(request: Request, name: str):
     with open(f"{article_directory}/{name}") as f:
-        return templates.TemplateResponse("article.html", {"request": request, "article": f.read()})
+        content = markdown.markdown(f.read())
+        return templates.TemplateResponse("article.html", {"request": request, "article": content})
