@@ -15,7 +15,7 @@ def get_index_page():
 def name_file(name):
     return f"{article_directory}/{name}.md"
 
-@app.get("/{name:path}/edit", name="path-convertor")
+@app.get("/articles/{name:path}/edit", name="path-convertor")
 def get_article(request: Request, name: str):
     file_name = name_file(name)
 
@@ -31,11 +31,11 @@ def read_file(name, request):
         content = markdown.markdown(f.read())
         return templates.TemplateResponse("article.html", {"request": request, "name": name, "article": content})
 
-@app.get("/{name:path}", name="path-convertor")
+@app.get("/articles/{name:path}", name="path-convertor")
 def get_article(request: Request, name: str):
     return read_file(name, request)
 
-@app.post("/{name:path}", name="path-converter")
+@app.post("/articles/{name:path}", name="path-converter")
 def post_article(request: Request, name: str, article: str=Form(...)):
     with open(name_file(name),"w") as f:
         f.write(article)
