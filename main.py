@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 import markdown
+import os
 
 app = FastAPI()
 article_directory = "./articles"
@@ -17,7 +18,12 @@ def name_file(name):
 
 @app.get("/{name:path}/edit", name="path-convertor")
 def get_article(request: Request, name: str):
-    with open(name_file(name)) as f:
+    file_name = name_file(name)
+
+    if not os.path.isfile(file_name):
+        open(file_name, "a")
+
+    with open(file_name) as f:
         content = f.read()
         return templates.TemplateResponse("edit.html", {"request": request, "name": name, "article": content})
 
