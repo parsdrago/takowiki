@@ -12,14 +12,17 @@ templates = Jinja2Templates(directory="templates")
 def get_index_page():
     return {}
 
+def name_file(name):
+    return f"{article_directory}/{name}.md"
+
 @app.get("/{name:path}/edit", name="path-convertor")
 def get_article(request: Request, name: str):
-    with open(f"{article_directory}/{name}") as f:
+    with open(name_file(name)) as f:
         content = f.read()
         return templates.TemplateResponse("edit.html", {"request": request, "name": name, "article": content})
 
 def read_file(name, request):
-    with open(f"{article_directory}/{name}") as f:
+    with open(name_file(name)) as f:
         content = markdown.markdown(f.read())
         return templates.TemplateResponse("article.html", {"request": request, "article": content})
 
@@ -29,6 +32,6 @@ def get_article(request: Request, name: str):
 
 @app.post("/{name:path}", name="path-converter")
 def post_article(request: Request, name: str, article: str=Form(...)):
-    with open(f"{article_directory}/{name}", "w") as f:
+    with open(name_file(name),"w") as f:
         f.write(article)
     return read_file(name, request)
