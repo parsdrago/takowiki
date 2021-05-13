@@ -29,7 +29,7 @@ def get_article(request: Request, name: str):
 def read_file(name, request):
     with open(name_file(name)) as f:
         content = markdown.markdown(f.read())
-        return templates.TemplateResponse("article.html", {"request": request, "article": content})
+        return templates.TemplateResponse("article.html", {"request": request, "name": name, "article": content})
 
 @app.get("/{name:path}", name="path-convertor")
 def get_article(request: Request, name: str):
