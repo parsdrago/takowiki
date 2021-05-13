@@ -4,6 +4,8 @@ services:
         app:
                 container_name: "app"
                 build: .
+                volumes:
+                        - ./articles:/app/articles
                 ports:
                         - 8000:8000
                 tty: true
