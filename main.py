@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 import markdown
 import os
+import glob
 
 app = FastAPI()
 article_directory = "./articles"
@@ -11,6 +12,24 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/")
 def get_index_page():
     return {}
+
+def pack_content_list(file_list):
+    result = {}
+    for file_name in file_list:
+        print(file_name)
+        name_to_show = "/".join(file_name.split("/")[2:])[:-3]
+        link = file_name[1:][:-3]
+
+        result[name_to_show] = link
+        
+    return result
+
+@app.get("/contents")
+def get_contents_table(request: Request):
+    file_list = glob.glob(f"{article_directory}/*.md") + glob.glob(f"{article_directory}/**/*.md")
+    pack = pack_content_list(file_list)
+    print(pack)
+    return templates.TemplateResponse("contents.html", {"request": request, "file_list": pack})
 
 def name_file(name):
     return f"{article_directory}/{name}.md"

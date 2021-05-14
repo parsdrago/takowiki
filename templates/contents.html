@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Contents - takowiki</title>
+	</head>
+	<body>
+		<ul>
+			{%- for key, value in file_list.items()%}
+			<li><a href="{{value}}">{{key}}</a></li>
+			{%- endfor %}
+		</ul>
+	</body>
+</html>
