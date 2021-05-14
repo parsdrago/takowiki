@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 COPY templates/ ./templates/
+COPY assets/ ./assets/
 
 RUN apk add --no-cache build-base \
  && pip install --no-cache-dir --trusted-host pypi.python.org -r requirements.txt \

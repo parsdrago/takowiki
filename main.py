@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 import markdown
 import os
 import glob
@@ -8,6 +9,7 @@ app = FastAPI()
 article_directory = "./articles"
 
 templates = Jinja2Templates(directory="templates")
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 
 @app.get("/")
 def get_index_page():
