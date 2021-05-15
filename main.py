@@ -18,7 +18,6 @@ def get_index_page():
 def pack_content_list(file_list):
     result = {}
     for file_name in file_list:
-        print(file_name)
         name_to_show = "/".join(file_name.split("/")[2:])[:-3]
         link = file_name[1:][:-3]
 
@@ -26,7 +25,7 @@ def pack_content_list(file_list):
         
     return result
 
-@app.get("/contents")
+@app.get("/articles")
 def get_contents_table(request: Request):
     file_list = glob.glob(f"{article_directory}/*.md") + glob.glob(f"{article_directory}/**/*.md")
     pack = pack_content_list(file_list)
