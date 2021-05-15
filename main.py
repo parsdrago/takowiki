@@ -12,8 +12,8 @@ templates = Jinja2Templates(directory="templates")
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 
 @app.get("/")
-def get_index_page():
-    return {}
+def get_index_page(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 def pack_content_list(file_list):
     result = {}
