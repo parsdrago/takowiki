@@ -1,0 +1,10 @@
+takowiki is a wiki software.
+
+
+Designed to be useful for environment where engineers and non-engineers are working together and editing same document.
+
+Engineers are people who want to edit the document in texteditor they like and manage the document by git. On the other hand, non-engineers want to edit some built-in WYSIWYG editor and have no ideas about any version management system.
+
+To achive the goal, in takowiki
+- Documents are managed in defualt file system of the os as a git repository.
+- Each document are readable and editable in web browser like a wiki service.
